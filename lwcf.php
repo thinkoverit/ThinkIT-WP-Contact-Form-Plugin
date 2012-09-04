@@ -162,7 +162,7 @@ function toit_enqueue_scripts() {
 	if ( 'header' === TOIT_LOAD_JS )
 		$in_footer = false;
 
-	wp_enqueue_script( 'toit-wp-contact-form', esc_plugin_url( 'toit-script.js' ),
+	wp_enqueue_script( 'toit-wp-contact-form', toit_plugin_url( 'toit-script.js' ),
 		array( 'jquery', 'jquery-form' ), ESC_CURRENT_VERSION, $in_footer );
 }
 */
@@ -170,11 +170,11 @@ if ( TOIT_LOAD_CSS )
 	add_action( 'wp_print_styles', 'toit_enqueue_styles' );
 
 function toit_enqueue_styles() {
-	wp_enqueue_style( 'toit-wp-contact-form', esc_plugin_url( 'styles.css' ),
+	wp_enqueue_style( 'toit-wp-contact-form', toit_plugin_url( 'styles.css' ),
 		array(), ESC_CURRENT_VERSION, 'all' );
 
 	if ( 'rtl' == get_bloginfo( 'text_direction' ) ) {
-		wp_enqueue_style( 'toit-wp-contact-form-rtl', esc_plugin_url( 'styles-rtl.css' ),
+		wp_enqueue_style( 'toit-wp-contact-form-rtl', toit_plugin_url( 'styles-rtl.css' ),
 			array(), ESC_CURRENT_VERSION, 'all' );
 	}
 }
