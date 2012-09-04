@@ -52,7 +52,7 @@ function toit_admin_page_render()
 	if(isset($_GET['toit_current_id'])) 
 		$toit_current_id = $_GET['toit_current_id'];
 	
-	require_once TOIT_PLUGIN_DIRECTORY . '/toit_settings_page.php';
+	require_once TOIT_PLUGIN_DIRECTORY . '/lwcf_settings_page.php';
 }
 add_action( 'admin_init', 'toit_register_settings' );
 
