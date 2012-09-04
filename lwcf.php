@@ -41,7 +41,7 @@ function toit_create_menu_pages() {
 	}
 
 
-	add_menu_page( __( 'LW Contact Form', 'toit' ), __( 'LW Contact Form', 'toit' ),
+	add_menu_page( __( 'ThinkIT Contact', 'toit' ), __( 'ThinkIT Contact', 'toit' ),
 		'edit_posts', 'toit', 'toit_admin_page_render' );
 
 }
