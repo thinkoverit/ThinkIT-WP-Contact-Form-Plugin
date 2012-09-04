@@ -135,7 +135,7 @@ function toit_admin_show_message() {
 		if(isset($_GET['toit_current_id']))
 			$message = __( "Contact form updated.", 'toit' );
 		else{
-			$msg = ' [simple-contact-form '.get_last_added_form_id().'] Please add this code in post,page where you want to place this form.';
+			$msg = ' [thinkit-wp-contact-form '.get_last_added_form_id().'] Please add this code in post,page where you want to place this form.';
 			$message = __( "Contact form saved.".$msg, 'toit' );
 		}
 	}else if(isset($_GET['message']) && $_GET['message'] == 'deleted')

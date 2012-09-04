@@ -18,7 +18,7 @@ with customizable number of element like plain textbox, email field, URL field, 
 1. Upload the entire 'ThinkIT Contact Form' folder to the '/wp-content/plugins/' directory.
 1. Activate the plugin through the 'Plugins' menu in WordPress.
 
-You will find 'ThinkIT Contact Form' menu in your WordPress admin panel.
+You will find 'ThinkIT Contact' menu in your WordPress admin panel.
 
 == Remove plugin ==
 
