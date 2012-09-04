@@ -70,8 +70,11 @@ class TOIT_ContactForm {
 	}
 
 	private function _render_after_submit_notifications() {
-		if($this->email_sent){
-			return '<p>Mail sent successfully to Adminitrator</p>';
+		if($this->is_submitted()){
+			if($this->email_sent)
+				return '<p>Mail sent successfully to Adminitrator</p>';
+		}else{
+			return '<p>Email failed. Please contact system administrator to rectify.</p>';
 		}
 	}
 

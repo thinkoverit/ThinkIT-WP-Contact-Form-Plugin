@@ -111,7 +111,9 @@ function get_current_url(){
 
 	return esc_url_raw($_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
 }
-
+function toit_plugin_url( $path = '' ) {
+	return plugins_url( $path, TOIT_PLUGIN_BASENAME );
+}
 function parse_variable($var){
 	if(!empty($var)){
 		$var = trim($var);
