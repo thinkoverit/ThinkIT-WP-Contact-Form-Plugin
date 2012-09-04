@@ -1,6 +1,6 @@
 ===ThinkIT WP Contact Form Plugin===
 Contributors: thinkoverit.com
-Tags: wordpress plugin,contact form, website form, simple easy ,light weight contact form.
+Tags: wordpress plugin,contact form, website form, simple easy ,light weight contact form plugin.
 Requires at least: 3.4
 Tested on: 3.4
 
