@@ -71,7 +71,7 @@ class TOIT_ContactForm {
 
 	private function _render_after_submit_notifications() {
 		if($this->email_sent){
-			return '<p>Mail sent successfully to Email-'.$this->email.'</p>';
+			return '<p>Mail sent successfully to Adminitrator</p>';
 		}
 	}
 
@@ -164,7 +164,7 @@ class TOIT_ContactForm {
 		
 		$headers = "From: ".get_bloginfo('admin_email')."\n";
 		//$headers .= "Content-Type: text/html\n";
-		
+
 		return @wp_mail( $this->email, $this->subject, $body, $headers );
 	}
 }
