@@ -41,7 +41,7 @@ Class TextArea{
 				$validate_error_html = $this->form->get_validation_error($this->name);
 		}
 
-		$html = '<p class="toit-wrapper-tag">'.$this->options['toit_label'].' <textarea name="' . $this->name . '" ' . $atts . ' >' . esc_attr( $value ) . '</textarea>'. $validate_error_html.'</p>';	
+		$html = '<p class="toit-wrapper-tag"><label>'.$this->options['toit_label'].'</label> <textarea name="' . $this->name . '" ' . $atts . ' >' . esc_attr( $value ) . '</textarea>'. $validate_error_html.'</p>';	
 		
 		return $html;
 	}

@@ -40,7 +40,7 @@ Class CheckBox{
 				$validate_error_html = $this->form->get_validation_error($this->name);
 		}
 
-		$html = '<p class="toit-wrapper-tag">'.$this->options['toit_label'].' <input type="checkbox" name="' . $this->name . '" value="1"' . $atts . ' />'. $validate_error_html.'</p>';	
+		$html = '<p class="toit-wrapper-tag"><label>'.$this->options['toit_label'].'</label> <input type="checkbox" name="' . $this->name . '" value="1"' . $atts . ' />'. $validate_error_html.'</p>';	
 		
 		return $html;
 	}

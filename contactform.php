@@ -59,7 +59,7 @@ class TOIT_ContactForm {
 		$form .= $this->_render_elements();
 
 
-		$form .= '<p class="submit"><input type="submit" name="toit-submit-form" class="button-primary" value="Submit" /></p>';
+		$form .= '<p class="toit-form-submit"><input type="submit" name="toit-submit-form" class="toit-form-submit-button" value="Submit" /></p>';
 		$form .= '</form>';
 		
 		$form .= $this->_render_after_submit_notifications();

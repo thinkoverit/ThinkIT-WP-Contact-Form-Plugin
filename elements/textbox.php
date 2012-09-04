@@ -46,7 +46,7 @@ Class TextBox{
 				$validate_error_html = $this->form->get_validation_error($this->name);
 		}
 
-		$html = '<p class="toit-wrapper-tag">'.$this->options['toit_label'].' <input type="' . $type . '" name="' . $this->name . '" value="' . esc_attr( $value ) . '"' . $atts . ' />'. $validate_error_html.'</p>';	
+		$html = '<p class="toit-wrapper-tag"><label>'.$this->options['toit_label'].'</label> <input type="' . $type . '" name="' . $this->name . '" value="' . esc_attr( $value ) . '"' . $atts . ' />'. $validate_error_html.'</p>';	
 		
 		return $html;
 	}

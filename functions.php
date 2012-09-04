@@ -131,6 +131,7 @@ function get_last_added_form_id(){
 	return get_option("toit_form_count");
 }
 function toit_admin_show_message() {
+	global $esc_notification;
 
 	if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == true ||
 		isset($_GET['updated']) && $_GET['updated'] == true){
@@ -142,7 +143,9 @@ function toit_admin_show_message() {
 		}
 	}else if(isset($_GET['message']) && $_GET['message'] == 'deleted')
 		$message = __( "Contact form is deleted", 'toit' );
-			
+		
+	if(isset($esc_notification) && !empty($esc_notification))
+		$message .= $esc_notification;		
 	if ( ! $message )
 		return;
 

@@ -13,6 +13,7 @@ License: GPL2
 // definitions
 define( 'TOIT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'TOIT_PLUGIN_NAME', trim( dirname( TOIT_PLUGIN_BASENAME ), '/' ) );
+define( 'TOIT_PLUGIN_TITLE', 'ThinkIT WP Contact Form Plugin');
 define( 'TOIT_PLUGIN_DIRECTORY', WP_PLUGIN_DIR . '/' . TOIT_PLUGIN_NAME );
 
 define( 'TOIT_CURRENT_VERSION', '0.1' );
@@ -65,18 +66,31 @@ function toit_register_settings() {
 	
 	if(toit_has_admin_edit_cap() && isset($_POST['toit-add-update']) && isset($_POST['toit_form_count']) && isset($_POST['toit_form_id'])){
 
-		register_setting( 'toit-contact-form-group', 'toit_form_count' );
-		
 		$toit_form_count = $_POST['toit_form_count'];
 		$toit_current_id = isset($_POST['toit_current_id']) ? $_POST['toit_current_id'] : 0;
 
+		$toit_form_id = isset($_POST['toit_form_id']) ? $_POST['toit_form_id'] : 0;	
 
-		$toit_form_id = $_POST['toit_form_id'];	
-
+		if($toit_form_id){
+			$toit_form_name = isset($_POST['toit_form_name_'.$toit_form_id]) ? $_POST['toit_form_name_'.$toit_form_id] : '';
+			$toit_form_email = isset($_POST['toit_form_email_'.$toit_form_id]) ? $_POST['toit_form_email_'.$toit_form_id] : '';
+			
+			if (!filter_var($toit_form_email, FILTER_VALIDATE_EMAIL)) {
+				global $esc_notification;
+				$esc_notification = "Please add a valid recipient Email ID.";
+				return;
+			}
+			if(empty($toit_form_name)){
+				global $esc_notification;
+				$esc_notification = "Please add a form name to identify.";
+				return;
+			}
+		}
 		//Edit or New Form creation
 		//For edit $toit_form_id == $toit_current_id
 		$toit_variable_count = isset($_POST['toit_variable_count_'.$toit_form_id]) ? $_POST['toit_variable_count_'.$toit_form_id] : 0;
 		
+		register_setting( 'toit-contact-form-group', 'toit_form_count' );
 		register_setting( 'toit-contact-form-group', 'toit_variable_count_'.$toit_form_id);
 		register_setting( 'toit-contact-form-group', 'toit_form_name_'.$toit_form_id);
 		register_setting( 'toit-contact-form-group', 'toit_form_email_'.$toit_form_id);
