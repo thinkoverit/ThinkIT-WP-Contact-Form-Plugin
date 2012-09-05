@@ -1,0 +1,11 @@
+/*Stylesheet for "ThinkIT WP Contact form plugin "*/
+/*Created on 5th Sept 2012 by ThinkOverIT.com */
+.toit-form{clear:both;}
+.toit-form .toit-wrapper-tag{clear:both; display:block; margin:0; padding:10px 0; position:relative;}
+.toit-wrapper-tag label, .toit-wrapper-btn label{display:inline-block; width:10%; min-width:80px; vertical-align:top}
+.toit-wrapper-tag input, .toit-wrapper-tag select, .toit-wrapper-tag textarea{width:auto; margin:0}
+.toit-wrapper-btn .toit-form-submit-button{border-top:1px solid #ccc; border-left:1px solid #ccc; border-bottom:1px solid #999; border-right:1px solid #999; background-color:#eee; color:#000;}
+.toit-form .toit-error, .toit-form .toit-success{padding:5px 10px; background:#f8f8f8; border-radius:5px; color:#ff0000; box-shadow:3px 3px 3px #ccc; font-size:11px;}
+.toit-form .toit-success{color:#00ff00;} .toit-wrapper-tag .toit-error{position:absolute; width:150px; right:0; top:0px;}
+.toit-wrapper-tag .toit-error:after{content:""; display:block; position:absolute; left:-10px; top:12px; width:0; height:0; border-style:solid; border-width:5px; border-color:transparent #f8f8f8 transparent transparent; }
+
