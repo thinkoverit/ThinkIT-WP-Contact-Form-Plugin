@@ -55,7 +55,6 @@ Class TextBox{
 		$value = $this->form->get_element_value($this->name);
 		if ( 'on' == $this->options['required']){
 
-
 			if(empty($value))
 				$this->form->set_validation_error($this->name, '<div class="toit-error">'.$this->options['label'] .' is required.</div>');
 			else{
