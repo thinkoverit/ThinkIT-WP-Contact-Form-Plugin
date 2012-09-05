@@ -2,7 +2,7 @@
 /*
 Plugin Name: ThinkIT WP Contact Form Plugin
 Plugin URI: http://thinkoverit.com/stoit/
-Description: Simple, Easy to manage and very light weight Contact form plugin for Wordpress from ThinkOverIT (www.thinkoverit.com)
+Dtoitription: Simple, Easy to manage and very light weight Contact form plugin for Wordpress from ThinkOverIT (www.thinkoverit.com)
 Version: 0.1
 Author: Pandurang Zambare, pandu@thinkoverit.com
 Author URI: http://thinkoverit.com
@@ -29,6 +29,7 @@ require_once TOIT_PLUGIN_DIRECTORY . '/functions.php';
 require_once TOIT_PLUGIN_DIRECTORY . '/contactform.php';
 require_once TOIT_PLUGIN_DIRECTORY . '/elements/textbox.php';
 require_once TOIT_PLUGIN_DIRECTORY . '/elements/checkbox.php';
+require_once TOIT_PLUGIN_DIRECTORY . '/elements/textarea.php';
 
 
 add_action( 'admin_menu', 'toit_create_menu_pages', 9 );
@@ -36,10 +37,72 @@ add_action( 'admin_menu', 'toit_create_menu_pages', 9 );
 function toit_create_menu_pages() {
 	global $toit_current_id;
 
+	if(toit_has_admin_edit_cap() && isset($_POST['toit-add-update'])){
 
-	if(toit_has_admin_edit_cap() && isset($_POST['toit-delete']) && isset($_POST['toit_current_id'])){
+		$toit_current_id = isset($_POST['toit_current_id']) ? toit_parse_variable($_POST['toit_current_id']) : '';
+		check_admin_referer( 'toit_add_update_' . $toit_current_id );
+		
+		$toit_form_email = isset($_POST['toit_form_email']) ? toit_parse_variable($_POST['toit_form_email']) : '';
+		$toit_form_subject = isset($_POST['toit_form_subject']) ? toit_parse_variable($_POST['toit_form_subject']) : '';
+		$toit_form_message_top = isset($_POST['toit_form_message_top']) ? toit_parse_variable($_POST['toit_form_message_top']) : '';
+		$toit_form_message_bottom = isset($_POST['toit_form_message_bottom']) ? toit_parse_variable($_POST['toit_form_message_bottom']) : '';
+		
+		$toit_fields_count = isset($_POST['toit_fields_count']) ? toit_parse_variable($_POST['toit_fields_count']) : 4;
 
-		$toit_current_id = $_POST['toit_current_id'];
+	
+		$fields = array();
+
+		for($i=0;$i<=$toit_fields_count;$i++){ 
+			$label = isset($_POST['toit_label'.$i]) ? toit_parse_variable($_POST['toit_label'.$i]) : '';
+			if(empty($label)) continue;
+			$field = isset($_POST['toit_field'.$i]) ? toit_parse_variable($_POST['toit_field'.$i]) : '';
+			$order = isset($_POST['toit_order'.$i]) ? toit_parse_variable($_POST['toit_order'.$i]) : '';
+			$required = isset($_POST['toit_required'.$i]) ? toit_parse_variable($_POST['toit_required'.$i]) : '';
+			$fields[] = array("label"=>$label,
+								 "field"=>$field,
+								 "order"=>$order,
+								 "required"=>$required);
+								 
+		}
+
+		global $wpdb;
+
+		$table_name = get_toit_table_name();
+
+		
+		$params = array("email"=>$toit_form_email,
+						"subject"=>$toit_form_subject,
+						"top_message"=>$toit_form_message_top,
+						"bottom_message"=>$toit_form_message_bottom,
+						"fields"=>serialize($fields));
+
+		if(empty($toit_current_id)){
+
+			$result = $wpdb->insert( $table_name, $params );
+
+			if ( $result ) {
+				$new_form_id = $wpdb->insert_id;
+				$redirect_to = toit_admin_url( array( 'message' => 'created', "toit_current_id" => $new_form_id ) );
+			} else {
+				$redirect_to = toit_admin_url( array( 'message' => 'create-failed'));
+			}
+			wp_redirect( $redirect_to );
+
+		} else { // Update
+
+			$result = $wpdb->update( $table_name, $params,
+				array( 'form_id' => absint( $toit_current_id ) ) );
+
+			if ( $result ) {
+				$redirect_to = toit_admin_url( array( 'message' => 'updated', "toit_current_id" => $toit_current_id ) );
+			} else {
+				$redirect_to = toit_admin_url( array( 'message' => 'update-failed', "toit_current_id" => $toit_current_id ) );
+			}
+			wp_redirect( $redirect_to );
+		}
+	}else if(toit_has_admin_edit_cap() && isset($_GET['action']) && $_GET['action'] == "delete" &&isset($_GET['toit_current_id'])){
+
+		$toit_current_id = $_GET['toit_current_id'];
 		delete_contact_form($toit_current_id);
 		$redirect_to = toit_admin_url( array( 'message' => 'deleted' ) );
 		wp_redirect( $redirect_to );
@@ -56,7 +119,7 @@ function toit_admin_page_render()
 	global $toit_current_id;
 	if(isset($_GET['toit_current_id'])) 
 		$toit_current_id = $_GET['toit_current_id'];
-	
+
 	require_once TOIT_PLUGIN_DIRECTORY . '/lwcf_settings_page.php';
 }
 add_action( 'admin_init', 'toit_register_settings' );
@@ -71,35 +134,38 @@ function toit_register_settings() {
 
 		$toit_form_id = isset($_POST['toit_form_id']) ? $_POST['toit_form_id'] : 0;	
 
+		$validated = true;
 		if($toit_form_id){
 			$toit_form_name = isset($_POST['toit_form_name_'.$toit_form_id]) ? $_POST['toit_form_name_'.$toit_form_id] : '';
 			$toit_form_email = isset($_POST['toit_form_email_'.$toit_form_id]) ? $_POST['toit_form_email_'.$toit_form_id] : '';
 			
 			if (!filter_var($toit_form_email, FILTER_VALIDATE_EMAIL)) {
-				global $esc_notification;
-				$esc_notification = "Please add a valid recipient Email ID.";
-				return;
+				global $toit_notification;
+				$toit_notification = "Please add a valid recipient Email ID.";
+				$validated = false;
 			}
 			if(empty($toit_form_name)){
-				global $esc_notification;
-				$esc_notification = "Please add a form name to identify.";
-				return;
+				global $toit_notification;
+				$toit_notification = "Please add a form name to identify.";
+				$validated = false;
 			}
 		}
-		//Edit or New Form creation
-		//For edit $toit_form_id == $toit_current_id
-		$toit_variable_count = isset($_POST['toit_variable_count_'.$toit_form_id]) ? $_POST['toit_variable_count_'.$toit_form_id] : 0;
-		
-		register_setting( 'toit-contact-form-group', 'toit_form_count' );
-		register_setting( 'toit-contact-form-group', 'toit_variable_count_'.$toit_form_id);
-		register_setting( 'toit-contact-form-group', 'toit_form_name_'.$toit_form_id);
-		register_setting( 'toit-contact-form-group', 'toit_form_email_'.$toit_form_id);
-		register_setting( 'toit-contact-form-group', 'toit_form_subject_'.$toit_form_id);
-		for($i=1;$i<=$toit_variable_count;$i++){
-			register_setting( 'toit-contact-form-group', 'toit_label_'.$toit_form_id.$i );
-			register_setting( 'toit-contact-form-group', 'toit_field_'.$toit_form_id.$i );
-			register_setting( 'toit-contact-form-group', 'toit_class_'.$toit_form_id.$i );
-			register_setting( 'toit-contact-form-group', 'toit_required_'.$toit_form_id.$i );
+		if($validated){
+			//Edit or New Form creation
+			//For edit $toit_form_id == $toit_current_id
+			$toit_variable_count = isset($_POST['toit_variable_count_'.$toit_form_id]) ? $_POST['toit_variable_count_'.$toit_form_id] : 0;
+			
+			register_setting( 'toit-contact-form-group', 'toit_form_count' );
+			register_setting( 'toit-contact-form-group', 'toit_variable_count_'.$toit_form_id);
+			register_setting( 'toit-contact-form-group', 'toit_form_name_'.$toit_form_id);
+			register_setting( 'toit-contact-form-group', 'toit_form_email_'.$toit_form_id);
+			register_setting( 'toit-contact-form-group', 'toit_form_subject_'.$toit_form_id);
+			for($i=1;$i<=$toit_variable_count;$i++){
+				register_setting( 'toit-contact-form-group', 'toit_label_'.$toit_form_id.$i );
+				register_setting( 'toit-contact-form-group', 'toit_field_'.$toit_form_id.$i );
+				register_setting( 'toit-contact-form-group', 'toit_class_'.$toit_form_id.$i );
+				register_setting( 'toit-contact-form-group', 'toit_required_'.$toit_form_id.$i );
+			}
 		}
 	}
 }
@@ -165,6 +231,42 @@ function toit_handle_nonajax_submitting() {
 }
 
 function toit_handle_ajax_submitting(){
+}
+
+
+register_activation_hook(__FILE__,'toit_install');
+
+function toit_install() {
+	global $wpdb;
+
+	if ( check_toit_table_exists() )
+		return; //  already exists
+
+	$table_name = get_toit_table_name();
+
+	$charset_collate = '';
+	if ( $wpdb->has_cap( 'collation' ) ) {
+		if ( ! empty( $wpdb->charset ) )
+			$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
+		if ( ! empty( $wpdb->collate ) )
+			$charset_collate .= " COLLATE $wpdb->collate";
+	}
+
+	$ret = $wpdb->query( "CREATE TABLE IF NOT EXISTS $table_name (
+			form_id bigint(20) unsigned NOT NULL auto_increment,
+			email varchar(140) NOT NULL default '',
+			subject varchar(140) NOT NULL default '',
+			top_message text default '',
+			bottom_message text default '',
+			fields text NOT NULL,
+			PRIMARY KEY (form_id)) $charset_collate;" );
+
+	add_option("thinkit_contact_form_version", "0.1");
+	
+	if ( $ret === false )
+		return false;
+
+	return TRUE;
 }
 
 /*
