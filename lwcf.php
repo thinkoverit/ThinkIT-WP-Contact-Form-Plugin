@@ -2,7 +2,7 @@
 /*
 Plugin Name: ThinkIT WP Contact Form Plugin
 Plugin URI: http://thinkoverit.com/stoit/
-Dtoitription: Simple, Easy to manage and very light weight Contact form plugin for Wordpress from ThinkOverIT (www.thinkoverit.com)
+Description: Simple, Easy to manage and very light weight Contact form plugin for Wordpress from ThinkOverIT (www.thinkoverit.com)
 Version: 0.1
 Author: Pandurang Zambare, pandu@thinkoverit.com
 Author URI: http://thinkoverit.com

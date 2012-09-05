@@ -4,7 +4,6 @@ class TOIT_ContactForm {
 
 	public $id;
 	private $form_tag;
-	private $title;
 	private $form_elements;
 	private $element_values;
 	private $email;
