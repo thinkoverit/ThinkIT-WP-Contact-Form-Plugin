@@ -13,7 +13,7 @@ Class TextBox{
 	function __construct($form, $options){
 		$this->form = $form;
 		$this->options = $options;
-		$this->name = toit_encode_safe($this->options['label']);
+		$this->name = toitcf_encode_safe($this->options['label']);
 
 	}
 	public function render_html(){
@@ -63,7 +63,7 @@ Class TextBox{
 					if(!is_email($value))
 						$this->form->set_validation_error($this->name, '<p>'.$this->options['label'] .' is invalid.</p>');
 				}else if ( 'url' == $this->options['field']){
-					if(!toit_isValidURL($value))
+					if(!toitcf_isValidURL($value))
 						$this->form->set_validation_error($this->name, '<p>'.$this->options['label'] .' is invalid.</p>');
 				}
 			}

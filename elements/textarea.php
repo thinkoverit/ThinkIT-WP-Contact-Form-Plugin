@@ -13,7 +13,7 @@ Class TextArea{
 	function __construct($form, $options){
 		$this->form = $form;
 		$this->options = $options;
-		$this->name = toit_encode_safe($this->options['label']);
+		$this->name = toitcf_encode_safe($this->options['label']);
 
 	}
 	public function render_html(){

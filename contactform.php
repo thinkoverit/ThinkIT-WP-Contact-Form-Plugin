@@ -21,8 +21,8 @@ class TOIT_ContactForm {
 		
 		$form = get_contact_form($id);
 		
-		$this->email = $form['toit_form_email'];
-		$this->subject = $form['toit_form_subject'];
+		$this->email = $form['toitcf_form_email'];
+		$this->subject = $form['toitcf_form_subject'];
 		$this->top_message = $form['top_message'];
 		$this->bottom_message = $form['bottom_message'];
 		
@@ -32,7 +32,7 @@ class TOIT_ContactForm {
 
 		if($this->is_submitted()){
 			foreach($this->form_elements as $element)
-				$this->element_values[$element['toit_name']] = toit_parse_variable($_POST[$element['toit_name']]);
+				$this->element_values[$element['name']] = toitcf_parse_variable($_POST[$element['name']]);
 		}
 	}
 	public function getID(){
@@ -165,15 +165,15 @@ class TOIT_ContactForm {
 		$body = $this->top_message. "\n";
 		
 		foreach($this->form_elements as $element){
-			switch($element['toit_field']){
+			switch($element['field']){
 				case "textbox":
 				case "email":
 				case "url":
-					$body .= $element['toit_label']." : ".$this->element_values[$element['toit_name']]."\n";
+					$body .= $element['label']." : ".$this->element_values[$element['name']]."\n";
 				break;
 				case "checkbox":
-					if($this->element_values[$element['toit_name']])
-						$body .= $element['toit_label']." : Checked\n";
+					if($this->element_values[$element['name']])
+						$body .= $element['label']." : Checked\n";
 				break;
 			}
 		}

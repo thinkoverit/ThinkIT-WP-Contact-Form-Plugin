@@ -1,11 +1,11 @@
 <?php
-function toit_has_admin_edit_cap() {
+function toitcf_has_admin_edit_cap() {
 	return current_user_can( 'edit_posts' );
 }
 function get_all_contact_forms(){
 	
 	global $wpdb; 
-	$table_name = get_toit_table_name();
+	$table_name = get_toitcf_table_name();
 		
 	$ret = $wpdb->query( " SELECT * FROM $table_name " );
 			
@@ -25,12 +25,12 @@ function get_all_contact_forms(){
 	}
 	return $form;
 }
-function get_contact_form($toit_form_id){
+function get_contact_form($toitcf_form_id){
 	global $wpdb; 
 	$form = array();
 	
-	$table_name = get_toit_table_name();
-	$ret = $wpdb->query( $wpdb->prepare(" SELECT * FROM $table_name WHERE form_id =%d", $toit_form_id) );
+	$table_name = get_toitcf_table_name();
+	$ret = $wpdb->query( $wpdb->prepare(" SELECT * FROM $table_name WHERE form_id =%d", $toitcf_form_id) );
 		
 	if($ret){
 		foreach($wpdb->last_result as $row){
@@ -44,14 +44,14 @@ function get_contact_form($toit_form_id){
 	}
 	return $form;
 }
-function delete_contact_form($toit_form_id){
+function delete_contact_form($toitcf_form_id){
 	global $wpdb; 
 	
 	$table_name = get_esc_table_name();
-	$wpdb->query( $wpdb->prepare(" DELETE FROM $table_name WHERE form_id =%d", $toit_form_id) );
+	$wpdb->query( $wpdb->prepare(" DELETE FROM $table_name WHERE form_id =%d", $toitcf_form_id) );
 	return true;
 }
-function toit_admin_url( $query = array() ) {
+function toitcf_admin_url( $query = array() ) {
 	global $plugin_page;
 
 	if ( ! isset( $query['page'] ) )
@@ -70,10 +70,10 @@ function get_current_url(){
 
 	return esc_url_raw($_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
 }
-function toit_plugin_url( $path = '' ) {
+function toitcf_plugin_url( $path = '' ) {
 	return plugins_url( $path, TOIT_PLUGIN_BASENAME );
 }
-function toit_parse_variable($var){
+function toitcf_parse_variable($var){
 	if(!empty($var)){
 		$var = trim($var);
 		$var = strip_tags($var);
@@ -82,26 +82,26 @@ function toit_parse_variable($var){
 	}
 	return '';
 }
-function toit_isValidURL($url)
+function toitcf_isValidURL($url)
 {
 	return preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url);
 }
-function toit_encode_safe($label){
+function toitcf_encode_safe($label){
 	return preg_replace("/[^a-zA-Z]+/", "", $label);
 }
-function get_toit_table_name() {
+function get_toitcf_table_name() {
 	global $wpdb;
 
 	return $wpdb->prefix . "thinkit_contact_form";
 }
-function check_toit_table_exists() {
+function check_toitcf_table_exists() {
 	global $wpdb;
 
-	$table_name = get_toit_table_name();
+	$table_name = get_toitcf_table_name();
 
 	return strtolower( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) ) == strtolower( $table_name );
 }
-function toit_admin_show_message() {
+function toitcf_admin_show_message() {
 	global $esc_notification;
 		
 	$message= '';
@@ -109,7 +109,7 @@ function toit_admin_show_message() {
 		$message = $esc_notification;
 	else if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == true ||
 		isset($_GET['updated']) && $_GET['updated'] == true){
-		if(isset($_GET['toit_current_id']))
+		if(isset($_GET['toitcf_current_id']))
 			$message = __( "Contact form updated.", 'toit' );
 		else{
 			$msg = ' [thinkit-wp-contact-form '.get_last_added_form_id().'] Please add this code in post,page where you want to place this form.';
