@@ -13,7 +13,7 @@ Class TextArea{
 	function __construct($form, $options){
 		$this->form = $form;
 		$this->options = $options;
-		$this->name = $this->options['toit_name'];
+		$this->name = toit_encode_safe($this->options['label']);
 
 	}
 	public function render_html(){
@@ -25,10 +25,10 @@ Class TextArea{
 		$html = '';
 	
 
-		if ( 'on' == $this->options['toit_required'])
+		if ( 'on' == $this->options['required'])
 			$class .= ' toit-required';
-		if ( !empty($this->options['toit_class']))
-			$class .= ' '.$this->options['toit_class'];
+		if ( !empty($this->options['class']))
+			$class .= ' '.$this->options['class'];
 	
 		$atts = ' class="'.$class.'" id="'.$id.'" maxlength="'.$maxlength.'" ';
 
@@ -37,20 +37,20 @@ Class TextArea{
 		if($this->form->is_submitted()){
 			$value = $this->form->get_element_value($this->name);
 			
-			if ( 'on' == $this->options['toit_required'])
+			if ( 'on' == $this->options['required'])
 				$validate_error_html = $this->form->get_validation_error($this->name);
 		}
 
-		$html = '<p class="toit-wrapper-tag"><label>'.$this->options['toit_label'].'</label> <textarea name="' . $this->name . '" ' . $atts . ' >' . esc_attr( $value ) . '</textarea>'. $validate_error_html.'</p>';	
+		$html = '<p class="toit-wrapper-tag"><label>'.$this->options['label'].'</label> <textarea name="' . $this->name . '" ' . $atts . ' >' . esc_attr( $value ) . '</textarea>'. $validate_error_html.'</p>';	
 		
 		return $html;
 	}
 	public function validate(){
-	
+print_r($this->name);
 		$value = $this->form->get_element_value($this->name);
-		if ( 'on' == $this->options['toit_required']){
+		if ( 'on' == $this->options['required']){
 			if(empty($value))
-				$this->form->set_validation_error($this->name, '<p>'.$this->options['toit_label'] .' is required.</p>');
+				$this->form->set_validation_error($this->name, '<p>'.$this->options['label'] .' is required.</p>');
 		}
 	}
 }
