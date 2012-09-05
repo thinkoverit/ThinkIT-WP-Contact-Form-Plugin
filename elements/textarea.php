@@ -41,16 +41,16 @@ Class TextArea{
 				$validate_error_html = $this->form->get_validation_error($this->name);
 		}
 
-		$html = '<p class="toit-wrapper-tag"><label>'.$this->options['label'].'</label> <textarea name="' . $this->name . '" ' . $atts . ' >' . esc_attr( $value ) . '</textarea>'. $validate_error_html.'</p>';	
+		$html = '<div class="toit-wrapper-tag"><label>'.$this->options['label'].'</label> <textarea name="' . $this->name . '" ' . $atts . ' >' . esc_attr( $value ) . '</textarea>'. $validate_error_html.'</div>';	
 		
 		return $html;
 	}
 	public function validate(){
-print_r($this->name);
+
 		$value = $this->form->get_element_value($this->name);
 		if ( 'on' == $this->options['required']){
 			if(empty($value))
-				$this->form->set_validation_error($this->name, '<p>'.$this->options['label'] .' is required.</p>');
+				$this->form->set_validation_error($this->name, '<div class="toit-error">'.$this->options['label'] .' is required.</div>');
 		}
 	}
 }

@@ -102,7 +102,7 @@ class TOIT_ContactForm {
 					$html .= $txt->render_html(); 
 				break;
 				case "button":
-					$html .= '<p class="toit-wrapper-tag"><input type="submit" name="toit-submit-form" class="toit-form-submit-button" value="'.$element['label'].'" /></p>';
+					$html .= '<div class="toit-wrapper-btn"><label></label><input type="submit" name="toit-submit-form" class="toit-form-submit-button" value="'.$element['label'].'" /></div>';
 				break;
 			}
 

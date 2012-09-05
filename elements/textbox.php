@@ -46,7 +46,7 @@ Class TextBox{
 				$validate_error_html = $this->form->get_validation_error($this->name);
 		}
 
-		$html = '<p class="toit-wrapper-tag"><label>'.$this->options['label'].'</label> <input type="' . $type . '" name="' . $this->name . '" value="' . esc_attr( $value ) . '"' . $atts . ' />'. $validate_error_html.'</p>';	
+		$html = '<div class="toit-wrapper-tag"><label>'.$this->options['label'].'</label> <input type="' . $type . '" name="' . $this->name . '" value="' . esc_attr( $value ) . '"' . $atts . ' />'. $validate_error_html.'</div>';	
 		
 		return $html;
 	}
@@ -57,14 +57,14 @@ Class TextBox{
 
 
 			if(empty($value))
-				$this->form->set_validation_error($this->name, '<p>'.$this->options['label'] .' is required.</p>');
+				$this->form->set_validation_error($this->name, '<div class="toit-error">'.$this->options['label'] .' is required.</div>');
 			else{
 				if ( 'email' == $this->options['field']){
 					if(!is_email($value))
-						$this->form->set_validation_error($this->name, '<p>'.$this->options['label'] .' is invalid.</p>');
+						$this->form->set_validation_error($this->name, '<div class="toit-error">'.$this->options['label'] .' is invalid.</div>');
 				}else if ( 'url' == $this->options['field']){
 					if(!toitcf_isValidURL($value))
-						$this->form->set_validation_error($this->name, '<p>'.$this->options['label'] .' is invalid.</p>');
+						$this->form->set_validation_error($this->name, '<div class="toit-error">'.$this->options['label'] .' is invalid.</div>');
 				}
 			}
 		}

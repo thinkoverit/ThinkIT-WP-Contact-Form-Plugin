@@ -38,7 +38,7 @@ Class CheckBox{
 				$validate_error_html = $this->form->get_validation_error($this->name);
 		}
 
-		$html = '<p class="toit-wrapper-tag"><label>'.$this->options['label'].'</label> <input type="checkbox" name="' . $this->name . '" value="1"' . $atts . ' />'. $validate_error_html.'</p>';	
+		$html = '<div class="toit-wrapper-tag"><label>'.$this->options['label'].'</label> <input type="checkbox" name="' . $this->name . '" value="1"' . $atts . ' />'. $validate_error_html.'</div>';	
 		
 		return $html;
 	}
@@ -47,7 +47,7 @@ Class CheckBox{
 		$value = $this->form->get_element_value($this->name);
 		if ( 'on' == $this->options['required']){
 			if(empty($value))
-				$this->form->set_validation_error($this->name, '<p>'.$this->options['label'] .' is required.</p>');
+				$this->form->set_validation_error($this->name, '<div class="toit-error">'.$this->options['label'] .' is required.</div>');
 		}
 	}
 }
