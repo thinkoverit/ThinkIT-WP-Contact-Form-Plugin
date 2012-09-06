@@ -47,7 +47,7 @@ function get_contact_form($toitcf_form_id){
 function delete_contact_form($toitcf_form_id){
 	global $wpdb; 
 	
-	$table_name = get_esc_table_name();
+	$table_name = get_toitcf_table_name();
 	$wpdb->query( $wpdb->prepare(" DELETE FROM $table_name WHERE form_id =%d", $toitcf_form_id) );
 	return true;
 }
