@@ -38,7 +38,7 @@ You can link back to our site at http://thinkOverIT.com
 
 = What is the plugin page?  =
 
-http://thinkoverit.com/lwcf
+http://thinkoverit.com/ThinkIT-WP-Contact-Form-Plugin/
 
 = Where do I post my feedback? =
 
