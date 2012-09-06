@@ -187,7 +187,7 @@ class TOIT_ContactForm {
 		$headers = "From: ".get_bloginfo('admin_email')."\n";
 		//$headers .= "Content-Type: text/html\n";
 
-		return wp_mail( $this->email, $this->subject, $body, $headers );
+		return @wp_mail( $this->email, $this->subject, $body, $headers );
 	}
 }
 ?>
