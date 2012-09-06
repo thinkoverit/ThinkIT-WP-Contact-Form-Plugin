@@ -20,8 +20,8 @@ class TOIT_ContactForm {
 		
 		$form = get_contact_form($id);
 		
-		$this->email = $form['toitcf_form_email'];
-		$this->subject = $form['toitcf_form_subject'];
+		$this->email = $form['email'];
+		$this->subject = $form['subject'];
 		$this->top_message = $form['top_message'];
 		$this->bottom_message = $form['bottom_message'];
 		
@@ -35,7 +35,6 @@ class TOIT_ContactForm {
 				$this->element_values[$name] = toitcf_parse_variable($_POST[$name]);
 			}
 		}
-		print_r($this->element_values);
 	}
 	public function getID(){
 		return $this->id;
@@ -164,7 +163,7 @@ class TOIT_ContactForm {
 
 	private function _compose_and_send_mail(  ) {
 
-		$body = $this->top_message. "\n";
+		$body = $this->top_message. "\n\n";
 		
 		foreach($this->form_elements as $element){
 			$name = toitcf_encode_safe($element['label']);
@@ -182,13 +181,13 @@ class TOIT_ContactForm {
 			}
 		}
 
-		$body = $this->bottom_message. "\n";
+		$body .= "\n".$this->bottom_message. "\n";
 		$body .= "\nThis Email is sent by ".TOIT_PLUGIN_TITLE." Installed at ".get_bloginfo('wpurl');
 		
 		$headers = "From: ".get_bloginfo('admin_email')."\n";
 		//$headers .= "Content-Type: text/html\n";
 
-		return @wp_mail( $this->email, $this->subject, $body, $headers );
+		return wp_mail( $this->email, $this->subject, $body, $headers );
 	}
 }
 ?>

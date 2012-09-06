@@ -42,7 +42,7 @@ http://thinkoverit.com/lwcf
 
 = Where do I post my feedback? =
 
-Post it at the plugin post: http://thinkoverit.com/lwcf
+Post it at the plugin post: http://thinkoverit.com/ThinkIT-WP-Contact-Form-Plugin/
 
 == Upgrade Notice ==
 
