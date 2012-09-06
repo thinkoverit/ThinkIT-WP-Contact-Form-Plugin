@@ -184,6 +184,9 @@ class TOIT_ContactForm {
 		$body .= "\n".$this->bottom_message. "\n";
 		$body .= "\nThis Email is sent by ".TOIT_PLUGIN_TITLE." Installed at ".get_bloginfo('wpurl');
 		
+		if(isset($_SERVER['REMOTE_ADDR']))
+			$body .= " from " $_SERVER['REMOTE_ADDR'];
+		
 		$headers = "From: ".get_bloginfo('admin_email')."\n";
 		//$headers .= "Content-Type: text/html\n";
 
