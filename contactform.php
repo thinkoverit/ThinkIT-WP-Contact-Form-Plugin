@@ -67,7 +67,9 @@ class TOIT_ContactForm {
 
 		$form .= '</form>';
 		
+		$form .= '<div class="toitcf-ajax-result">';
 		$form .= $this->get_after_submit_notifications();
+		$form .= '</div>';
 
 		$form .= '</div>';
 
@@ -75,15 +77,12 @@ class TOIT_ContactForm {
 	}
 
 	public function get_after_submit_notifications() {
-		$str = '<div class="toitcf-ajax-result">';
 		if($this->is_submitted() && $this->validation_success){
 			if($this->email_sent)
-				$str .=  '<div class="toit-success">'.__('Mail sent successfully to Adminitrator').'</div>';
+				return  '<div class="toit-success">'.__('Mail sent successfully to Adminitrator').'</div>';
 			else
-				$str .=  '<div class="toit-error">'.__('Email failed. Please contact system administrator to rectify.').'</div>';
+				return  '<div class="toit-error">'.__('Email failed. Please contact system administrator to rectify.').'</div>';
 		}
-		$str .= '</div>';
-		return $str;
 	}
 
 	private function _render_elements() {

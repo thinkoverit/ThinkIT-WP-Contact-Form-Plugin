@@ -60,7 +60,7 @@ function toitcfShowMessage(data) {
 		
 	}else{
 		var toitcfResultObj = jQuery("body").find('div.toitcf-ajax-result');
-		toitcfResultObj.append('<span class="toitcf-error">' + data.message + '</span>');
+		toitcfResultObj.append(data.message);
 	}
 
 }
