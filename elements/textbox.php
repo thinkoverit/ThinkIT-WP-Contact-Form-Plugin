@@ -14,7 +14,6 @@ Class TextBox{
 		$this->form = $form;
 		$this->options = $options;
 		$this->name = toitcf_encode_safe($this->options['label']);
-
 	}
 	public function render_html(){
 		$atts = '';
