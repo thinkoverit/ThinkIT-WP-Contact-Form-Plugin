@@ -1,36 +1,40 @@
 ===ThinkIT WP Contact Form Plugin===
-Contributors: thinkoverit.com
-Tags: wordpress plugin,contact form, website form, simple easy ,light weight contact form plugin.
+Contributors: http://thinkoverit.com
+Tags: wordpress plugin, contact, form, website form, simple, easy, light weight, contact form plugin.
 Requires at least: 3.4
-Tested on: 3.4
-
-An ThinkIT Contact Form Plugin to recive queries from customers about site functionality or product enquiries, etc.
+Tested on: WP 3.4
 
 == Description ==
 
-Simple, Easy to manage and very light weight Contact form plugin for Wordpress from ThinkOverIT (www.thinkoverit.com)
-Can be used to create website forms for different needs like customer queries, product enquiries,
-with customizable number of element like plain textbox, email field, URL field, etc...
+A very simple, easy to use, customizable and light weight contact form plugin for Wordpress. 
+Use it as contact form on your website ‘Contact’ page or customize and add as an inquiry / information form anywhere on Wordpress sites.
+Visit developer site at http://thinkoverit.com 
 
 
 == Installation ==
 
 1. Upload the entire 'ThinkIT Contact Form' folder to the '/wp-content/plugins/' directory.
-1. Activate the plugin through the 'Plugins' menu in WordPress.
 
-You will find 'ThinkIT Contact' menu in your WordPress admin panel.
+2. Activate the plugin through the 'Plugins' dashboard in WordPress Admin.
+
+3. You will find 'ThinkIT Contact' menu in your WordPress admin panel. Add/Edit forms and modify settings and copy the short-code for the form.
+
+4. Edit any page on your WP site where you want to add this form and paste the short-code in Editor and ‘Publish’ the page.
+
+5. You’re done. Your contact/inquiry form is now online.
+
 
 == Remove plugin ==
 
-1. Deactivate plugin through the 'Plugins' menu in WordPress
-2. Delete plugin through the 'Plugins' menu in WordPress
+1. Deactivate plugin through the 'Plugins' menu in WordPress.
+2. If you wish to completely remove the plugin, you may delete the respective plugin folder through the 'Plugins' menu in WordPress
 
 It's best to use the build in delete function of wordpress. That way all the stored data will be removed and no orphaned data will stay.
 
 
 = How can I support you? =
 
-Post a comment on http://thinkoverit.com/lwcf
+You can link back to our site at http://thinkOverIT.com 
 
 = What is the plugin page?  =
 
@@ -38,12 +42,13 @@ http://thinkoverit.com/lwcf
 
 = Where do I post my feedback? =
 
-Post it at the plugin page: http://thinkoverit.com/lwcf
+Post it at the plugin post: http://thinkoverit.com/lwcf
 
 == Upgrade Notice ==
 
-Just do a normal upgrade.
+Not required.
 
 == Changelog ==
 
-= 0.1 (15.09.2012) =
+= 0.1 (15.09.2012)
+
