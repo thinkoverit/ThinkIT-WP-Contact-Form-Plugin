@@ -231,6 +231,35 @@ function toitcf_handle_nonajax_submitting() {
 }
 
 function toitcf_handle_ajax_submitting(){
+	global $esc_form;
+
+	if ( ! isset($_POST['toit-form-id'] ) )
+		return;
+
+	$id = (int) $_POST['toit-form-id'];
+
+	$toit_form = new TOIT_ContactForm($id);
+
+	if ( $toit_form->is_submitted()) {
+		
+		$validation = $toit_form->validate();
+		$msg= '';
+
+		if ( $toit_form->validation_success ) {
+			$toit_form->send_mail();
+			$msg .= $toit_form->get_after_submit_notifications();
+			echo json_encode(array("success"=>"1", "message"=>$msg));
+			return;
+		}else{
+			$msg= array();
+			foreach($toit_form->validation_errors as $element=>$error){
+				$msg[] = array("name"=>$element, "error"=>$error);
+			}
+			echo json_encode(array("success"=>"0","message"=>$msg));
+			return;
+		}
+	}
+	echo json_encode(array("success"=>"0","message"=>"Something went wrong."));
 }
 
 
@@ -269,7 +298,7 @@ function toitcf_install() {
 	return TRUE;
 }
 
-/*
+
 if ( TOIT_LOAD_JS )
 	add_action( 'wp_print_scripts', 'toitcf_enqueue_scripts' );
 
@@ -281,7 +310,7 @@ function toitcf_enqueue_scripts() {
 	wp_enqueue_script( 'toit-wp-contact-form', toitcf_plugin_url( 'toit-script.js' ),
 		array( 'jquery', 'jquery-form' ), ESC_CURRENT_VERSION, $in_footer );
 }
-*/
+
 if ( TOIT_LOAD_CSS )
 	add_action( 'wp_print_styles', 'toitcf_enqueue_styles' );
 

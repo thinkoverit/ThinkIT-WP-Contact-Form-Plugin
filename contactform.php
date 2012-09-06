@@ -10,7 +10,7 @@ class TOIT_ContactForm {
 	private $subject;
 	private $top_message;
 	private $bottom_message;
-	private $validation_errors = array();
+	public $validation_errors = array();
 	public $validation_success = false;
 	public $email_sent = false;
 
@@ -58,7 +58,7 @@ class TOIT_ContactForm {
 
 		$url = get_current_url();
 
-		$form .= '<form action="' . $url . '" method="post" class="toit-form">' . "\n";
+		$form .= '<form action="" method="post" class="toit-form">' . "\n";
 		$form .= '<input type="hidden" name="toit-form-id" value="'. esc_attr( $this->id ) . '" />' . "\n";
 		$form .= '<input type="hidden" name="toit-form-tag" value="'. esc_attr( $this->form_tag ) . '" />' . "\n";
 		
@@ -67,20 +67,23 @@ class TOIT_ContactForm {
 
 		$form .= '</form>';
 		
-		$form .= $this->_render_after_submit_notifications();
+		$form .= $this->get_after_submit_notifications();
 
 		$form .= '</div>';
 
 		return $form;
 	}
 
-	private function _render_after_submit_notifications() {
+	public function get_after_submit_notifications() {
+		$str = '<div class="toitcf-ajax-result">';
 		if($this->is_submitted() && $this->validation_success){
 			if($this->email_sent)
-				return '<div class="toit-success">'.__('Mail sent successfully to Adminitrator').'</div>';
+				$str .=  '<div class="toit-success">'.__('Mail sent successfully to Adminitrator').'</div>';
 			else
-				return '<div class="toit-error">'.__('Email failed. Please contact system administrator to rectify.').'</div>';
+				$str .=  '<div class="toit-error">'.__('Email failed. Please contact system administrator to rectify.').'</div>';
 		}
+		$str .= '</div>';
+		return $str;
 	}
 
 	private function _render_elements() {
@@ -107,9 +110,7 @@ class TOIT_ContactForm {
 					$html .= '<div class="toit-wrapper-btn"><label></label><input type="submit" name="toit-submit-form" class="toit-form-submit-button" value="'.$element['label'].'" /></div>';
 				break;
 			}
-
 		}
-
 		return $html;
 	}
 
@@ -185,7 +186,7 @@ class TOIT_ContactForm {
 		$body .= "\nThis Email is sent by ".TOIT_PLUGIN_TITLE." Installed at ".get_bloginfo('wpurl');
 		
 		if(isset($_SERVER['REMOTE_ADDR']))
-			$body .= " from " $_SERVER['REMOTE_ADDR'];
+			$body .= " from " .$_SERVER['REMOTE_ADDR'];
 		
 		$headers = "From: ".get_bloginfo('admin_email')."\n";
 		//$headers .= "Content-Type: text/html\n";
