@@ -77,9 +77,9 @@ class TOIT_ContactForm {
 	private function _render_after_submit_notifications() {
 		if($this->is_submitted() && $this->validation_success){
 			if($this->email_sent)
-				return '<div class="toit-success">Mail sent successfully to Adminitrator</div>';
+				return '<div class="toit-success">'.__('Mail sent successfully to Adminitrator').'</div>';
 			else
-				return '<div class="toit-error">Email failed. Please contact system administrator to rectify.</div>';
+				return '<div class="toit-error">'.__('Email failed. Please contact system administrator to rectify.').'</div>';
 		}
 	}
 
