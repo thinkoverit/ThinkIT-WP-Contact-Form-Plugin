@@ -12,16 +12,17 @@ Visit developer site at http://thinkoverit.com
 
 
 == Installation ==
+1. Download and unzip the foler from here.
 
-1. Upload the entire 'ThinkIT Contact Form' folder to the '/wp-content/plugins/' directory.
+2. Upload the entire 'ThinkIT Contact Form' folder to the '/wp-content/plugins/' directory.
 
-2. Activate the plugin through the 'Plugins' dashboard in WordPress Admin.
+3. Activate the plugin through the 'Plugins' dashboard in WordPress Admin.
 
-3. You will find 'ThinkIT Contact' menu in your WordPress admin panel. Add/Edit forms and modify settings and copy the short-code for the form.
+4. You will find 'ThinkIT Contact' menu in your WordPress admin panel. Add/Edit forms and modify settings and copy the short-code for the form.
 
-4. Edit any page on your WP site where you want to add this form and paste the short-code in Editor and ‘Publish’ the page.
+5. Edit any page on your WP site where you want to add this form and paste the short-code in Editor and ‘Publish’ the page.
 
-5. You’re done. Your contact/inquiry form is now online.
+6. You’re done. Your contact/inquiry form is now online.
 
 
 == Remove plugin ==
@@ -34,7 +35,7 @@ It's best to use the build in delete function of wordpress. That way all the sto
 
 = How can I support you? =
 
-You can link back to our site at http://thinkOverIT.com 
+You can link back to our site at http://thinkOverIT.com . We will take it as an appreciation and love for our plugin. 
 
 = What is the plugin page?  =
 
