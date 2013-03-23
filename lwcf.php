@@ -49,7 +49,16 @@ function toitcf_create_menu_pages() {
 		
 		$toitcf_fields_count = isset($_POST['toitcf_fields_count']) ? toitcf_parse_variable($_POST['toitcf_fields_count']) : 4;
 
-	
+		$emails = explode(",", $toitcf_form_email);
+		foreach($emails as $email){
+			if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+				global $toitcf_notification;
+				$toitcf_notification = "Please add a valid recipient Email ID.";
+				return;
+			}
+		}
+			
+			
 		$fields = array();
 
 		for($i=0;$i<=$toitcf_fields_count;$i++){ 
@@ -57,11 +66,15 @@ function toitcf_create_menu_pages() {
 			if(empty($label)) continue;
 			$field = isset($_POST['toitcf_field'.$i]) ? toitcf_parse_variable($_POST['toitcf_field'.$i]) : '';
 			$order = isset($_POST['toitcf_order'.$i]) ? toitcf_parse_variable($_POST['toitcf_order'.$i]) : '';
+			$class = isset($_POST['toitcf_class'.$i]) ? toitcf_parse_variable($_POST['toitcf_class'.$i]) : '';
+			$placeholder = isset($_POST['toitcf_placeholder'.$i]) ? toitcf_parse_variable($_POST['toitcf_placeholder'.$i]) : '';
 			$required = isset($_POST['toitcf_required'.$i]) ? toitcf_parse_variable($_POST['toitcf_required'.$i]) : '';
 			$fields[] = array("label"=>$label,
 								 "field"=>$field,
 								 "order"=>$order,
-								 "required"=>$required);
+								 "required"=>$required,
+								 "class"=>$class,
+								 "placeholder"=>$placeholder);
 								 
 		}
 
@@ -69,7 +82,6 @@ function toitcf_create_menu_pages() {
 
 		$table_name = get_toitcf_table_name();
 
-		
 		$params = array("email"=>$toitcf_form_email,
 						"subject"=>$toitcf_form_subject,
 						"top_message"=>$toitcf_form_message_top,
@@ -121,53 +133,6 @@ function toitcf_admin_page_render()
 		$toitcf_current_id = $_GET['toitcf_current_id'];
 
 	require_once TOIT_PLUGIN_DIRECTORY . '/lwcf_settings_page.php';
-}
-add_action( 'admin_init', 'toitcf_register_settings' );
-
-function toitcf_register_settings() {
-
-	
-	if(toitcf_has_admin_edit_cap() && isset($_POST['toit-add-update']) && isset($_POST['toitcf_form_count']) && isset($_POST['toitcf_form_id'])){
-
-		$toitcf_form_count = $_POST['toitcf_form_count'];
-		$toitcf_current_id = isset($_POST['toitcf_current_id']) ? $_POST['toitcf_current_id'] : 0;
-
-		$toitcf_form_id = isset($_POST['toitcf_form_id']) ? $_POST['toitcf_form_id'] : 0;	
-
-		$validated = true;
-		if($toitcf_form_id){
-			$toitcf_form_name = isset($_POST['toitcf_form_name_'.$toitcf_form_id]) ? $_POST['toitcf_form_name_'.$toitcf_form_id] : '';
-			$toitcf_form_email = isset($_POST['toitcf_form_email_'.$toitcf_form_id]) ? $_POST['toitcf_form_email_'.$toitcf_form_id] : '';
-			
-			if (!filter_var($toitcf_form_email, FILTER_VALIDATE_EMAIL)) {
-				global $toitcf_notification;
-				$toitcf_notification = "Please add a valid recipient Email ID.";
-				$validated = false;
-			}
-			if(empty($toitcf_form_name)){
-				global $toitcf_notification;
-				$toitcf_notification = "Please add a form name to identify.";
-				$validated = false;
-			}
-		}
-		if($validated){
-			//Edit or New Form creation
-			//For edit $toitcf_form_id == $toitcf_current_id
-			$toitcf_variable_count = isset($_POST['toitcf_variable_count_'.$toitcf_form_id]) ? $_POST['toitcf_variable_count_'.$toitcf_form_id] : 0;
-			
-			register_setting( 'toit-contact-form-group', 'toitcf_form_count' );
-			register_setting( 'toit-contact-form-group', 'toitcf_variable_count_'.$toitcf_form_id);
-			register_setting( 'toit-contact-form-group', 'toitcf_form_name_'.$toitcf_form_id);
-			register_setting( 'toit-contact-form-group', 'toitcf_form_email_'.$toitcf_form_id);
-			register_setting( 'toit-contact-form-group', 'toitcf_form_subject_'.$toitcf_form_id);
-			for($i=1;$i<=$toitcf_variable_count;$i++){
-				register_setting( 'toit-contact-form-group', 'toitcf_label_'.$toitcf_form_id.$i );
-				register_setting( 'toit-contact-form-group', 'toitcf_field_'.$toitcf_form_id.$i );
-				register_setting( 'toit-contact-form-group', 'toitcf_class_'.$toitcf_form_id.$i );
-				register_setting( 'toit-contact-form-group', 'toitcf_required_'.$toitcf_form_id.$i );
-			}
-		}
-	}
 }
 
 add_shortcode( 'thinkit-wp-contact-form', 'toitcf_contact_form_short_tag' );

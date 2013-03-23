@@ -32,6 +32,7 @@ class TOIT_ContactForm {
 		if($this->is_submitted()){
 			foreach($this->form_elements as $element){
 				$name = toitcf_encode_safe($element['label']);
+				if($element['field'] == 'button') continue;
 				$this->element_values[$name] = toitcf_parse_variable($_POST[$name]);
 			}
 		}
@@ -106,7 +107,7 @@ class TOIT_ContactForm {
 					$html .= $txt->render_html(); 
 				break;
 				case "button":
-					$html .= '<div class="toit-wrapper-btn"><label></label><input type="submit" name="toit-submit-form" class="toit-form-submit-button" value="'.$element['label'].'" /></div>';
+					$html .= '<div class="toit-wrapper-btn"><label></label><input type="submit" name="toit-submit-form" class="toit-form-submit-button '.$element['class'].'" value="'.$element['label'].'" /></div>';
 				break;
 			}
 		}
@@ -168,6 +169,7 @@ class TOIT_ContactForm {
 		foreach($this->form_elements as $element){
 			$name = toitcf_encode_safe($element['label']);
 			switch($element['field']){
+				case "textarea":
 				case "textbox":
 				case "email":
 				case "url":
@@ -190,7 +192,12 @@ class TOIT_ContactForm {
 		$headers = "From: ".get_bloginfo('admin_email')."\n";
 		//$headers .= "Content-Type: text/html\n";
 
-		return @wp_mail( $this->email, $this->subject, $body, $headers );
+		$emails = explode(",", $this->email);
+		foreach($emails as $email){
+			if(!empty($email))
+				@wp_mail( $email, $this->subject, $body, $headers );
+		}
+		return true;
 	}
 }
 ?>

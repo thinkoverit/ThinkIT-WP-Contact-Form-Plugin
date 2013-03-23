@@ -14,6 +14,8 @@ Class TextBox{
 		$this->form = $form;
 		$this->options = $options;
 		$this->name = toitcf_encode_safe($this->options['label']);
+		$this->placeholder = trim($this->options['placeholder']);
+		$this->cname = trim($this->options['class']);
 	}
 	public function render_html(){
 		$atts = '';
@@ -26,7 +28,7 @@ Class TextBox{
 
 		if ( 'email' == $this->options['field']){
 			$class .= ' toit-email';	
-			$type = "email"; 
+			//$type = "email"; 
 		}else if ( 'url' == $this->options['field'])
 			$class .= ' toit-url';
 		if ( 'on' == $this->options['required'])
@@ -34,7 +36,7 @@ Class TextBox{
 		if ( !empty($this->options['class']))
 			$class .= ' '.$this->options['class'];
 	
-		$atts = ' class="'.$class.'" id="'.$id.'" maxlength="'.$maxlength.'" ';
+		$atts = ' class="'.$class.' '. $this->cname .'"  placeholder="'. $this->placeholder .'" maxlength="'.$maxlength.'" ';
 
 		$value = '';
 		

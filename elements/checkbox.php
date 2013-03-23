@@ -14,6 +14,8 @@ Class CheckBox{
 		$this->form = $form;
 		$this->options = $options;
 		$this->name = toitcf_encode_safe($this->options['label']);
+		$this->placeholder = trim($this->options['placeholder']);
+		$this->cname = trim($this->options['class']);
 
 	}
 	public function render_html(){
@@ -38,7 +40,7 @@ Class CheckBox{
 				$validate_error_html = $this->form->get_validation_error($this->name);
 		}
 
-		$html = '<div class="toit-wrapper-tag toit-'.$this->name.'"><label>'.$this->options['label'].'</label> <input type="checkbox" name="' . $this->name . '" value="1"' . $atts . ' />'. $validate_error_html.'</div>';	
+		$html = '<div class="toit-wrapper-tag toit-'.$this->name.'"><label>'.$this->options['label'].'</label> <input type="checkbox" name="' . $this->name . '" placeholder="'. $this->placeholder .'" class="'. $this->cname .'" value="1"' . $atts . ' />'. $validate_error_html.'</div>';	
 		
 		return $html;
 	}
