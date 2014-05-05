@@ -3,6 +3,8 @@ jQuery(document).ready(function() {
 
 		jQuery(".toit-form-submit-button").click(function() {
 			
+   jQuery(this).attr("disabled", true);
+   jQuery("#toit-image-loader").show();
 			var formObj =jQuery(this).parents("form");
 			
 			toitcf7CleanResults();
@@ -17,6 +19,7 @@ jQuery(document).ready(function() {
 				url: jQuery(formObj).attr("action"),
 				data: 'action=contact_form&'+str,
 				success: function(data) {
+
 					toitcfProcessJson(data);
 				}
 			});
@@ -25,26 +28,21 @@ jQuery(document).ready(function() {
 	}catch (e) {
 	}
 });
-function toitcfBeforeSubmit(formData, jqForm, options) {
-	toitcf7CleanResults();
-	jQuery('img.toitcf-ajax-loader', jqForm[0]).css({ visibility: 'visible' });
 
-	formData.push({name: 'toitcf_is_ajax_call', value: 1});
-	jQuery(jqForm[0]).append('<input type="hidden" name="toitcf_is_ajax_call" value="1" />');
 
-	return true;
+function getRandomNumber(){
+ return Math.floor((Math.random()*10)+1); 
 }
-
-
-
+ 
 function toitcfProcessJson(data) {
 	var toitcfResultObj = jQuery("body").find('div.toitcf-ajax-result');
-
+	 jQuery("#toit-image-loader").hide();
+	 jQuery(".toit-form-submit-button").attr("disabled", false);
+ 
 	toitcfShowMessage( data);
 	if (data.success == "0") {
 		toitcfResultObj.addClass('toitcf-validation-errors');
 	}else{
-		jQuery("div.toitcf-form > form").resetForm().clearForm();
 		toitcfResultObj.addClass('toitcf-subscribed');
 	}
 	jQuery('div.toitcf-ajax-result').show();
@@ -62,7 +60,6 @@ function toitcfShowMessage(data) {
 		var toitcfResultObj = jQuery("body").find('div.toitcf-ajax-result');
 		toitcfResultObj.append(data.message);
 	}
-
 }
 
 function toitcf7CleanResults() {

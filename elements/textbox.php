@@ -36,7 +36,7 @@ Class TextBox{
 		if ( !empty($this->options['class']))
 			$class .= ' '.$this->options['class'];
 	
-		$atts = ' class="'.$class.' '. $this->cname .'"  placeholder="'. $this->placeholder .'" maxlength="'.$maxlength.'" ';
+		$atts = ' class="'.$class.'"  placeholder="'. $this->placeholder .'" maxlength="'.$maxlength.'" ';
 
 		$value = '';
 		

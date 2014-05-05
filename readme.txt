@@ -2,15 +2,16 @@
 Contributors: http://thinkoverit.com
 Tags: wordpress plugin, contact, form, website form, simple, easy, light weight, contact form plugin.
 Requires at least: 3.4
-Tested on: WP 3.4
-Stable tag: 0.1.2
+Tested on: WP 3.6
+Stable tag: 0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-A very simple, easy to use, customizable and light weight contact form plugin for Wordpress. 
-Use it as contact form on your website ‘Contact’ page or customize and add as an inquiry / information form anywhere on Wordpress sites.
+A very simple, easy to use, customizable and light weight contact form plugin for Wordpress.
+Supports AJAX form submission if JQUERY plugin is enabled in WORDPRESS.
+Use it as contact form on your website 'Contact' page or customize and add as an inquiry / information form anywhere on Wordpress sites.
 Visit developer site at http://thinkoverit.com 
 
 
@@ -56,6 +57,9 @@ Not required.
 
 = 0.1 (11.09.2012)
 = 0.1.1 (9.1.2013) Showing Message from textarea in email.
-= 0.1.2 (6.2.2013) 
-  Allowed sending email to multiple email ids,
-  Added placeholder, class for fields
+= 0.1.2 (6.2.2013) Allowed sending email to multiple email ids,Added placeholder, class for fields
+= 0.1.3 (26.3.2013) Added Create new form link for easy access.
+= 0.1.4  (28.3.2013) Updated column name 
+= 0.2 (19.8.2013) Adding Google recaptcha Support for contact form.
+= 0.3 (23.8.2013) Handled Security issue.
+= 0.4  ()  Removed Google recaptcha and added simple Integer addition captcha for simplicity. Also overhauled the plugin structure so you might need to reconfigure FORM fields.

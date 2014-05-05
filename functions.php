@@ -19,7 +19,7 @@ function get_all_contact_forms(){
 			$form[$key]['subject'] = $row->subject;
 			$form[$key]['top_message'] = $row->top_message;
 			$form[$key]['bottom_message'] = $row->bottom_message;
-			$form[$key]['fields'] = maybe_unserialize($row->fields);
+			$form[$key]['fields'] = maybe_unserialize($row->form_fields);
 
 		}
 	}
@@ -39,7 +39,7 @@ function get_contact_form($toitcf_form_id){
 			$form['subject'] = $row->subject;
 			$form['top_message'] = $row->top_message;
 			$form['bottom_message'] = $row->bottom_message;
-			$form['fields'] = maybe_unserialize($row->fields);
+			$form['fields'] = maybe_unserialize($row->form_fields);
 		}
 	}
 	return $form;

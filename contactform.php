@@ -33,7 +33,10 @@ class TOIT_ContactForm {
 			foreach($this->form_elements as $element){
 				$name = toitcf_encode_safe($element['label']);
 				if($element['field'] == 'button') continue;
-				$this->element_values[$name] = toitcf_parse_variable($_POST[$name]);
+    
+    if(isset($_POST[$name]))
+     $this->element_values[$name] = toitcf_parse_variable($_POST[$name]);
+    else $this->element_values[$name] = '';
 			}
 		}
 	}
@@ -59,12 +62,11 @@ class TOIT_ContactForm {
 
 		$url = get_current_url();
 
-		$form .= '<form action="" method="post" class="toit-form">' . "\n";
+		$form .= '<form action="'.$url.'" method="post" class="toit-form">' . "\n";
 		$form .= '<input type="hidden" name="toit-form-id" value="'. esc_attr( $this->id ) . '" />' . "\n";
 		$form .= '<input type="hidden" name="toit-form-tag" value="'. esc_attr( $this->form_tag ) . '" />' . "\n";
 		
 		$form .= $this->_render_elements();
-
 
 		$form .= '</form>';
 		
@@ -107,8 +109,12 @@ class TOIT_ContactForm {
 					$html .= $txt->render_html(); 
 				break;
 				case "button":
-					$html .= '<div class="toit-wrapper-btn"><label></label><input type="submit" name="toit-submit-form" class="toit-form-submit-button '.$element['class'].'" value="'.$element['label'].'" /></div>';
+					$html .= '<div class="toit-wrapper-btn"><label></label><input type="submit" name="toit-submit-form" class="toit-form-submit-button '.$element['class'].'" value="'.$element['label'].'" /><img src="'.toitcf_plugin_url().'/ajax-loader.gif" id="toit-image-loader" /></div>';
 				break;
+    case "captcha":
+					$txt = new Captcha($this, $element);
+					$html .= $txt->render_html();
+    break;
 			}
 		}
 		return $html;
@@ -118,7 +124,7 @@ class TOIT_ContactForm {
 
 	public function validate() {
 
-		$result = array( 'valid' => true, 'reason' => array() );
+  $result = array( 'valid' => true, 'reason' => array() );
 
 		foreach($this->form_elements as $element){
 			switch($element['field']){
@@ -136,9 +142,14 @@ class TOIT_ContactForm {
 					$txt = new CheckBox($this, $element);
 					$txt->validate(); 
 				break;
+				case "captcha":
+					$txt = new Captcha($this, $element);
+					$txt->validate(); 
+
+    
+				break;
 			}
 		}
-	
 		if(empty($this->validation_errors))
 			$this->validation_success = true;
 		return $this->validation_errors;
@@ -183,20 +194,41 @@ class TOIT_ContactForm {
 			}
 		}
 
+  $customerData = '';
+		foreach($this->form_elements as $element){
+   switch($element['field']){
+				case "email":
+					$name = toitcf_encode_safe($element['label']);
+					$customerData['email'] = $this->element_values[$name];
+    break;
+				case "textarea":
+				case "textbox":
+				case "url":
+					$name = toitcf_encode_safe($element['label']);
+					$customerData[$element['label']] = $this->element_values[$name];
+				break;
+				case "checkbox":
+					if($this->element_values[$name])
+      $customerData[$element['label']] = "Checked";
+				break;
+   }
+		}
 		$body .= "\n".$this->bottom_message. "\n";
 		$body .= "\nThis Email is sent by ".TOIT_PLUGIN_TITLE." Installed at ".get_bloginfo('wpurl');
 		
 		if(isset($_SERVER['REMOTE_ADDR']))
 			$body .= " from " .$_SERVER['REMOTE_ADDR'];
 		
-		$headers = "From: ".get_bloginfo('admin_email')."\n";
+		$headers = "From: ".get_bloginfo('name')." < ".get_bloginfo('admin_email')." > \n";
 		//$headers .= "Content-Type: text/html\n";
 
+  do_action('toit_contactform_email_sent_before', $customerData );
 		$emails = explode(",", $this->email);
 		foreach($emails as $email){
 			if(!empty($email))
 				@wp_mail( $email, $this->subject, $body, $headers );
 		}
+  do_action('toit_contactform_email_sent_after', $customerData);
 		return true;
 	}
 }
